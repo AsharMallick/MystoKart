@@ -274,7 +274,7 @@ export const CartItem = ({ product }: Props) => {
       justifyContent={"space-between"}
     >
       <Box>
-        <Image src={product?.image} w={"20"} borderRadius={"full"} />
+        <Image src={product?.image.url} w={"20"} borderRadius={"full"} />
       </Box>
       <Box>
         <Text fontWeight={"bold"} children={product.title} />

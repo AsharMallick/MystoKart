@@ -104,7 +104,7 @@ const Checkout = () => {
           exit={{ opacity: 0, y: -20 }}
         >
           <Text fontSize="2xl" my={"2"} fontWeight="bold">
-            Checkout
+            1. Personal Details
           </Text>
         </motion.div>
         <form onSubmit={handleSubmit}>
@@ -198,7 +198,7 @@ const Checkout = () => {
               {/* Render your order summary and total here */}
               {/* Example: */}
               <Text fontSize="xl" fontWeight="bold">
-                Order Summary
+                2. Order Summary
               </Text>
               {products.map((item) => (
                 <Text key={item._id}>

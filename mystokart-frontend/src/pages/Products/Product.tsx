@@ -1,20 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, MouseEvent } from "react";
 import { Box, Image, Text, Badge, Button, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useGetProductQuery } from "../../services/product";
-import { useParams, Params } from "react-router-dom";
+import { useParams, Params, useNavigate } from "react-router-dom";
 // import { Response } from "../../interfaces/product.interface";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/Loader";
 import { State } from "../../interfaces/state.interface";
-
-export interface Product {
-  name: string;
-  image?: string;
-  price?: number;
-  category?: string;
-  details?: string;
-}
+import { Product } from "../../interfaces/product.interface";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -34,8 +27,29 @@ const ProductPage = () => {
   const addToCart = (data: Product) => {
     dispatch({ type: "ADD_TO_CART", payload: data });
   };
+  const navigate = useNavigate();
 
-  return result.isLoading && loading ? (
+  function handleBuyNow(
+    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) {
+    dispatch({ type: "CLEAR_CART" });
+    addToCart({
+      title: currentProduct?.title!,
+      details: currentProduct?.details!,
+      _id: currentProduct?._id!,
+      price: currentProduct?.price!,
+      image: {
+        url: currentProduct?.image?.url!,
+        public_id: currentProduct?.image?.public_id!,
+      },
+      qty: 1,
+      stock: currentProduct?.stock!,
+      category: currentProduct?.category!,
+    });
+    navigate("/checkout");
+  }
+
+  return result.isLoading || loading ? (
     <div
       style={{
         minHeight: "100vh",
@@ -94,17 +108,31 @@ const ProductPage = () => {
             _active={{ transform: "scale(0.95)" }}
             onClick={() =>
               addToCart({
-                title: currentProduct?.title,
-                details: currentProduct?.details,
-                _id: currentProduct?._id,
-                price: currentProduct?.price,
-                image: currentProduct?.image.url,
+                title: currentProduct?.title!,
+                details: currentProduct?.details!,
+                _id: currentProduct?._id!,
+                price: currentProduct?.price!,
+                image: {
+                  url: currentProduct?.image?.url!,
+                  public_id: currentProduct?.image?.public_id!,
+                },
                 qty: 1,
-                stock: currentProduct?.stock,
+                stock: currentProduct?.stock!,
+                category: currentProduct?.category!,
               })
             }
           >
             Add to Cart
+          </Button>
+          <Button
+            colorScheme="purple"
+            size="lg"
+            w="200px"
+            _hover={{ transform: "scale(1.05)" }}
+            _active={{ transform: "scale(0.95)" }}
+            onClick={handleBuyNow}
+          >
+            Buy now
           </Button>
         </Flex>
       </Box>
