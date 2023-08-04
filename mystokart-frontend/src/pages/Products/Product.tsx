@@ -99,7 +99,7 @@ const ProductPage = () => {
           </Text>
         </Box>
 
-        <Flex justify="flex-end" mt="4">
+        <Flex justify="flex-end" mt="4" gap={"4"}>
           <Button
             colorScheme="purple"
             size="lg"
