@@ -79,7 +79,7 @@ export const App = () => {
   }, [error, message, orderMessage, orderError]);
 
   useEffect(() => {
-    products.forEach(async (item) => {
+    products?.forEach(async (item) => {
       const { data } = await axios.post(
         server + "/checkcart",
         { price: item.price },

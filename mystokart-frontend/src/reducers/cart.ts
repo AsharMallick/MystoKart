@@ -3,7 +3,10 @@ import { Cart } from "../interfaces/cart.interface";
 
 const initialState = {
   cart: localStorage.getItem("cart")
-    ? (JSON.parse(localStorage.getItem("cart") as string) as Cart)
+    ? ({
+        products: JSON.parse(localStorage.getItem("cart") as string),
+        totalPrice: 0,
+      } as Cart)
     : ({ products: [], totalPrice: 0 } as Cart),
 };
 
@@ -24,13 +27,13 @@ export const cartReducer = createReducer(initialState, {
     } else {
       state.cart.products?.push(action.payload);
     }
-    localStorage.setItem("cart", JSON.stringify(state.cart));
+    localStorage.setItem("cart", JSON.stringify(state.cart.products));
   },
   REMOVE_FROM_CART: (state, action) => {
     state.cart.products = state.cart.products?.filter(
       (item) => item._id !== action.payload._id
     );
-    localStorage.setItem("cart", JSON.stringify(state.cart));
+    localStorage.setItem("cart", JSON.stringify(state.cart.products));
   },
   DECREASE_QUANTITY: (state, action) => {
     state.cart.products?.forEach((item) => {
@@ -39,22 +42,23 @@ export const cartReducer = createReducer(initialState, {
           state.cart.products = state.cart.products?.filter(
             (item) => item._id !== action.payload._id
           );
-          localStorage.setItem("cart", JSON.stringify(state.cart));
+          localStorage.setItem("cart", JSON.stringify(state.cart.products));
           return;
         }
         item.qty! -= 1;
       }
     });
-    localStorage.setItem("cart", JSON.stringify(state.cart));
+    localStorage.setItem("cart", JSON.stringify(state.cart.products));
   },
   CLEAR_CART: (state, action) => {
     state.cart.products = [];
-    localStorage.setItem("cart", JSON.stringify(state.cart));
+    localStorage.setItem("cart", JSON.stringify(state.cart.products));
     localStorage.removeItem("cart");
   },
 
   CALCULATE_SUBTOTAL: (state, _) => {
-    state.cart.totalPrice = state.cart.products
+    console.log({ cart: state.cart });
+    state.cart.totalPrice = state.cart?.products
       ?.filter((product) => product.price && product.qty)
       .reduce((acc, product) => acc + product.price * product.qty!, 0);
   },
