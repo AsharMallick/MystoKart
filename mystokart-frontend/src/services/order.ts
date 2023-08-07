@@ -21,10 +21,11 @@ export const orderApi = createApi({
         };
         totalPrice: number;
         orderType: string;
+        url: string;
       }
     >({
-      query: ({ orderItems, shippingDetails, totalPrice, orderType }) => ({
-        url: "/order/new",
+      query: ({ orderItems, shippingDetails, totalPrice, orderType, url }) => ({
+        url,
         method: "POST",
         credentials: "include",
         body: { orderItems, shippingDetails, totalPrice, orderType },

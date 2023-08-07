@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -18,7 +19,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.10.0",
     "redis": "^4.6.7",
-    "stripe": "^11.16.0"
+    "stripe": "^12.17.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

@@ -59,6 +59,7 @@ const Home = () => {
             repeatType: "mirror",
           }}
           src={bgImg}
+          alt={"bg image"}
         />
       </Flex>
 

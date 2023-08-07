@@ -14,6 +14,17 @@ export const authApi = createApi({
         credentials: "include",
       }),
     }),
+    register: builder.mutation<
+      Response,
+      { username: string; email: string; password: string }
+    >({
+      query: ({ email, password, username }) => ({
+        url: "/register",
+        method: "POST",
+        body: { email, password, name: username },
+        credentials: "include",
+      }),
+    }),
     loadUser: builder.query<Response, void>({
       query: () => ({
         url: "/me",
@@ -31,5 +42,9 @@ export const authApi = createApi({
   }),
 });
 
-export const { useLoginMutation, useLoadUserQuery, useLogoutMutation } =
-  authApi;
+export const {
+  useLoginMutation,
+  useLoadUserQuery,
+  useLogoutMutation,
+  useRegisterMutation,
+} = authApi;

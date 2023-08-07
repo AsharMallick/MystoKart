@@ -1,6 +1,7 @@
 import { Product } from "./product.interface";
 
 export interface Response {
+  url?: string | null;
   success: boolean;
   message?: string;
   error?: string;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEvent, useEffect } from "react";
 import {
   FormControl,
   FormLabel,
@@ -10,6 +10,10 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useRegisterMutation } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { State } from "../../interfaces/state.interface";
 
 const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
@@ -17,6 +21,24 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const { user } = useSelector((state: State) => state.auth);
+  const [register, result] = useRegisterMutation();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    register({ username, email, password });
+  };
+  useEffect(() => {
+    if (result.isSuccess) {
+      navigate("/");
+    }
+  }, [navigate, result]);
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [navigate, user]);
   return (
     <MotionFlex
       height="100vh"
@@ -35,7 +57,7 @@ const Signup = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <form>
+        <form onSubmit={handleSubmit}>
           <FormControl id="username" isRequired>
             <FormLabel>Username</FormLabel>
             <Input

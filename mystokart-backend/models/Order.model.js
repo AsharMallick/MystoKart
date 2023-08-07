@@ -17,7 +17,10 @@ const schema = new mongoose.Schema(
           type: String,
         },
 
-        image: String,
+        image: {
+          public_id: String,
+          url: String,
+        },
         qty: {
           type: Number,
           required: true,
@@ -60,13 +63,14 @@ const schema = new mongoose.Schema(
       },
     },
     paymentInfo: {
-      id: {
-        type: String,
-      },
       status: {
         type: String,
-        default: "Pending",
       },
+      payment_intent: String,
+      customer: String,
+      payment_id: String,
+      amount_total: Number,
+      default: {},
     },
     totalPrice: Number,
     orderType: String,

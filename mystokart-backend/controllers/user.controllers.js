@@ -3,7 +3,6 @@ const { catchAsyncError } = require("../middlewares/catchAsyncError");
 const ErrorHandler = require("../utils/errorHandler.js");
 
 exports.login = catchAsyncError(async (req, res, next) => {
-  console.log("Requested");
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {

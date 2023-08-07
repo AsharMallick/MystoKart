@@ -18,12 +18,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState";
 import { State } from "./interfaces/state.interface";
 import Loader from "./components/Loader";
+import Order from "./pages/Order/Order";
+import axios from "axios";
+import { server } from "./store";
 
 export const App = () => {
   const { user, error, message } = useSelector((state: State) => state.auth);
   const { message: orderMessage, error: orderError } = useSelector(
     (state: State) => state.order
   );
+  const {
+    cart: { products },
+  } = useSelector((state: State) => state.cartState);
 
   const location = useLocation().pathname;
   const dispatch = useDispatch();
@@ -71,6 +77,24 @@ export const App = () => {
       dispatch({ type: "clearAlerts" });
     }
   }, [error, message, orderMessage, orderError]);
+
+  useEffect(() => {
+    products.forEach(async (item) => {
+      const { data } = await axios.post(
+        server + "/checkcart",
+        { price: item.price },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      if (!data.success) {
+        toast.error("Some error occured with the cart");
+        dispatch({ type: "CLEAR_CART" });
+      }
+    });
+  }, [products]);
+
   return (
     <ChakraProvider theme={theme}>
       <Toaster
@@ -94,6 +118,7 @@ export const App = () => {
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order/:id" element={<Order />} />
       </Routes>
       <Footer />
     </ChakraProvider>

@@ -1,7 +1,9 @@
 const express = require("express");
 const { app } = require("./app");
 const dotenv = require("dotenv");
-const stripe = require("stripe")();
+dotenv.config({
+  path: "./config/config.env",
+});
 const user = require("./routes/user.routes");
 const product = require("./routes/product.routes");
 const order = require("./routes/order.routes");
@@ -9,13 +11,12 @@ const { connectDB } = require("./config/db");
 const errorMiddleware = require("./middlewares/Error");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const redis = require("redis");
+const stripeRoute = require("./routes/stripe.routes");
 
-dotenv.config({
-  path: "./config/config.env",
-});
 connectDB();
 const PORT = process.env.PORT;
+app.use("", stripeRoute);
+
 app.use(express.json());
 app.use(
   cors({

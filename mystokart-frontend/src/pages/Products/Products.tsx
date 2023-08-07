@@ -128,6 +128,7 @@ const Products = () => {
             <Select
               onChange={(e) => setCategory(e.target.value)}
               defaultValue={""}
+              value={category}
               placeholder="Select category"
             >
               {categories.map((category) => {
@@ -149,13 +150,11 @@ const Products = () => {
               onChange={(e) => setGt(e.target.value)}
               type="number"
               value={gt}
-              placeholder="Max Price"
             />
             Less Than :{" "}
             <Input
               onChange={(e) => setLt(e.target.value)}
               type="number"
-              placeholder="Min Price"
               value={lt}
               mb={2}
             />

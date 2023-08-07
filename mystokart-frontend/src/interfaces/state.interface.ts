@@ -9,6 +9,7 @@ export interface State {
     error?: string | null;
     user: User | null;
     loading: boolean;
+    isAuthenticated?: boolean | null;
   };
   cartState: {
     cart: Cart;

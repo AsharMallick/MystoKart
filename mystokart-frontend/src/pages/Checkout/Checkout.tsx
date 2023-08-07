@@ -12,22 +12,15 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  FormEvent,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../interfaces/state.interface";
-import { useNavigate } from "react-router-dom";
 import { useNewOrderMutation } from "../../services/order";
-import { server } from "../../store";
-import axios from "axios";
+import { Link, Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Checkout = () => {
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("Online");
   const { user } = useSelector((state: State) => state.auth);
   const {
     cart: { products, totalPrice },
@@ -39,13 +32,6 @@ const Checkout = () => {
     city: "",
     state: "",
   });
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -54,15 +40,6 @@ const Checkout = () => {
   };
 
   const [newOrder, result] = useNewOrderMutation();
-
-  const handleOnlineOrder = () => {
-    const { data } = axios.post(
-      server + "/payment/create",
-      { totalPrice },
-      { headers: { "Content-Type": "application/json" }, withCredentials: true }
-    );
-    console.log({ data });
-  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,12 +57,35 @@ const Checkout = () => {
         },
         totalPrice,
         orderType: paymentMethod,
+        url: "/order/new",
       });
     } else {
-      handleOnlineOrder();
+      newOrder({
+        orderItems: products,
+        shippingDetails: {
+          address: formData.address,
+          city: formData.city,
+          country: formData.state,
+          email: user?.email!,
+          phone: formData.phone,
+          pincode: Number(formData.postalCode),
+          state: formData.state,
+        },
+        totalPrice,
+        orderType: paymentMethod,
+        url: "/payment/create",
+      });
+      if (result.data) {
+        window.location.href = result?.data?.url!;
+      }
     }
-    console.log({ paymentMethod });
   };
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (result.data?.url) {
+      window.location.href = result?.data?.url!;
+    }
+  }, [result.data]);
 
   return (
     <Box
@@ -218,9 +218,22 @@ const Checkout = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
           >
-            <Button type="submit" colorScheme="purple" size="lg" width="100%">
-              Place Order
-            </Button>
+            {user ? (
+              <Button type="submit" colorScheme="purple" size="lg" width="100%">
+                Place Order
+              </Button>
+            ) : (
+              <Link to="/login">
+                <Button
+                  type="submit"
+                  colorScheme="purple"
+                  size="lg"
+                  width="100%"
+                >
+                  Login
+                </Button>
+              </Link>
+            )}
           </motion.div>
         </form>
       </Stack>

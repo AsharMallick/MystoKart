@@ -30,21 +30,24 @@ const Navbar = ({}) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const {
     cart: { products, totalPrice },
   } = useSelector((state: State) => state.cartState);
   const btnRef = useRef<HTMLButtonElement>(null);
   const dispatch = useDispatch();
-  const { user } = useSelector((state: State) => state.auth);
+  const { user, isAuthenticated } = useSelector((state: State) => state.auth);
   const [logout, result] = useLogoutMutation();
   useEffect(() => {
-    if (user && user !== null) {
-      setIsAuthenticated(true);
-    }
-    if (result.isSuccess) {
-      setIsAuthenticated(false);
-    }
+    // console.log({ user });
+    // if (user) {
+    //   setIsAuthenticated(true);
+    // } else {
+    //   setIsAuthenticated(false);
+    // }
+    // console.log({ isAuthenticated });
+    // if (result.isSuccess) {
+    //   setIsAuthenticated(false);
+    // }
   }, [user, result]);
 
   const handleLogout = () => {

@@ -20,10 +20,8 @@ exports.getOrCacheData = async (key, cb) => {
   const data = await redisClient.get(key);
 
   if (data != null) {
-    console.log("cache hit");
     return JSON.parse(data);
   } else {
-    console.log("cache miss");
     const newlyFetchedData = await cb();
     redisClient.SETEX(key, CACHE_EXPIRATION, JSON.stringify(newlyFetchedData));
     return newlyFetchedData;

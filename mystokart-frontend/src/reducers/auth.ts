@@ -8,6 +8,7 @@ interface AuthState {
   error?: string | null;
   ashar?: string | null;
   message?: string | null;
+  isAuthenticated?: boolean | null;
 }
 
 const initialState: AuthState = {
@@ -15,6 +16,7 @@ const initialState: AuthState = {
   user: null,
   error: null,
   message: null,
+  isAuthenticated: false,
 };
 
 export const authSlice = createSlice({
@@ -34,6 +36,17 @@ export const authSlice = createSlice({
         state.user = payload.user;
         state.error = null;
         state.message = payload.message;
+        state.isAuthenticated = true;
+      }
+    );
+    builder.addMatcher(
+      authApi.endpoints.register.matchFulfilled,
+      (state, { payload }) => {
+        state.loading = false;
+        state.user = payload.user;
+        state.error = null;
+        state.message = payload.message;
+        state.isAuthenticated = true;
       }
     );
     builder.addMatcher(
@@ -43,6 +56,17 @@ export const authSlice = createSlice({
         state.error = payload?.data.message;
         state.user = null;
         state.message = null;
+        state.isAuthenticated = false;
+      }
+    );
+    builder.addMatcher(
+      authApi.endpoints.register.matchRejected,
+      (state, { payload }) => {
+        state.loading = false;
+        state.error = payload?.data.message;
+        state.user = null;
+        state.message = null;
+        state.isAuthenticated = false;
       }
     );
     builder.addMatcher(
@@ -52,6 +76,7 @@ export const authSlice = createSlice({
         state.user = payload.user;
         state.error = null;
         state.message = null;
+        state.isAuthenticated = true;
       }
     );
     builder.addMatcher(
@@ -61,6 +86,7 @@ export const authSlice = createSlice({
         state.error = payload?.data.message;
         state.user = null;
         state.message = null;
+        state.isAuthenticated = false;
       }
     );
     builder.addMatcher(
@@ -70,6 +96,7 @@ export const authSlice = createSlice({
         state.user = null;
         state.error = null;
         state.message = payload.message;
+        state.isAuthenticated = false;
       }
     );
     builder.addMatcher(
@@ -79,6 +106,7 @@ export const authSlice = createSlice({
         state.error = payload?.data.message;
         state.user = null;
         state.message = null;
+        state.isAuthenticated = true;
       }
     );
   },
