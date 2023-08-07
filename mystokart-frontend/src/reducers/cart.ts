@@ -50,8 +50,9 @@ export const cartReducer = createReducer(initialState, {
     });
     localStorage.setItem("cart", JSON.stringify(state.cart.products));
   },
-  CLEAR_CART: (state, action) => {
+  CLEAR_CART: (state, _) => {
     state.cart.products = [];
+    state.cart.totalPrice = 0;
     localStorage.setItem("cart", JSON.stringify(state.cart.products));
     localStorage.removeItem("cart");
   },

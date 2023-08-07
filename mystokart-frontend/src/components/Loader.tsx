@@ -7,7 +7,7 @@ const Loader = () => {
       // xmlns:xlink="http://www.w3.org/1999/xlink"
       style={{
         margin: "auto",
-        background: "rgb(241, 242, 243)",
+        background: "#ffffff",
         display: "block",
       }}
       width="200px"

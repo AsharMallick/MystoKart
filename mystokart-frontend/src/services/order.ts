@@ -31,7 +31,14 @@ export const orderApi = createApi({
         body: { orderItems, shippingDetails, totalPrice, orderType },
       }),
     }),
+    getOrder: builder.query<Response, { id: string }>({
+      query: ({ id }) => ({
+        url: "/order/" + id,
+        method: "GET",
+        credentials: "include",
+      }),
+    }),
   }),
 });
 
-export const { useNewOrderMutation } = orderApi;
+export const { useNewOrderMutation, useGetOrderQuery } = orderApi;
