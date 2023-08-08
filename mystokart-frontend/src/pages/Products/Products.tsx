@@ -17,7 +17,6 @@ import {
 } from "@chakra-ui/react";
 import ProductCard from "../../components/ProductCard";
 import { useGetProductsQuery } from "../../services/product";
-import { Product } from "./Product";
 import { Response } from "../../interfaces/product.interface";
 import Pagination from "react-js-pagination";
 import "./products.css";
@@ -126,7 +125,10 @@ const Products = () => {
           <FormControl mb={4}>
             <FormLabel>Category</FormLabel>
             <Select
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => {
+                setCurrentPage(1);
+                setCategory(e.target.value);
+              }}
               defaultValue={""}
               value={category}
               placeholder="Select category"

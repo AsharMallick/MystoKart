@@ -31,7 +31,6 @@ router
         const order = await Order.findOne({
           "paymentInfo.payment_id": data.id,
         });
-        console.log({ order });
         order.paymentInfo.payment_intent = data.payment_intent;
         order.paymentInfo.customer = data.customer;
         order.paymentInfo.amount_total = data.shipping_cost.amount_total;

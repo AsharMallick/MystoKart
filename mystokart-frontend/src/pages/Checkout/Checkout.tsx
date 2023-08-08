@@ -16,8 +16,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../interfaces/state.interface";
 import { useNewOrderMutation } from "../../services/order";
-import { Link, Navigate, useNavigate, useSearchParams } from "react-router-dom";
-import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("Online");
@@ -84,6 +83,9 @@ const Checkout = () => {
   useEffect(() => {
     if (result.data?.url) {
       window.location.href = result?.data?.url!;
+    }
+    if (result.data?.order?._id) {
+      navigate("/order/" + result.data?.order?._id);
     }
   }, [result.data]);
 

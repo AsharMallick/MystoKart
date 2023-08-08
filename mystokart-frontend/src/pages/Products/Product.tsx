@@ -46,6 +46,7 @@ const ProductPage = () => {
       stock: currentProduct?.stock!,
       category: currentProduct?.category!,
     });
+    dispatch({ type: "CALCULATE_SUBTOTAL" });
     navigate("/checkout");
   }
 

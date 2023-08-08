@@ -37,18 +37,6 @@ const Navbar = ({}) => {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector((state: State) => state.auth);
   const [logout, result] = useLogoutMutation();
-  useEffect(() => {
-    // console.log({ user });
-    // if (user) {
-    //   setIsAuthenticated(true);
-    // } else {
-    //   setIsAuthenticated(false);
-    // }
-    // console.log({ isAuthenticated });
-    // if (result.isSuccess) {
-    //   setIsAuthenticated(false);
-    // }
-  }, [user, result]);
 
   const handleLogout = () => {
     logout();

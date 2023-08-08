@@ -58,7 +58,6 @@ export const cartReducer = createReducer(initialState, {
   },
 
   CALCULATE_SUBTOTAL: (state, _) => {
-    console.log({ cart: state.cart });
     state.cart.totalPrice = state.cart?.products
       ?.filter((product) => product.price && product.qty)
       .reduce((acc, product) => acc + product.price * product.qty!, 0);

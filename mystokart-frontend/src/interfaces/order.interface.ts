@@ -10,6 +10,7 @@ export interface Response {
 }
 
 export interface Order {
+  _id: string;
   orderItems: Product[];
   shippingDetails: {
     address: string;

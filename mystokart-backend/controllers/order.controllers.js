@@ -106,7 +106,7 @@ exports.createPayment = catchAsyncError(async (req, res) => {
 
 exports.processOrder = catchAsyncError(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
-  console.log("AAYA");
+  ("AAYA");
   if (order.status === "Processing") {
     order.status = "Shipped";
   } else if (order.status === "Shipped") {
