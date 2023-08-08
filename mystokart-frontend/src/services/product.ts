@@ -4,7 +4,7 @@ import { Response } from "../interfaces/product.interface";
 
 export const productsApi = createApi({
   reducerPath: "productsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000/api/v1" }),
+  baseQuery: fetchBaseQuery({ baseUrl: server }),
   endpoints: (builder) => ({
     getProducts: builder.query<
       Response,

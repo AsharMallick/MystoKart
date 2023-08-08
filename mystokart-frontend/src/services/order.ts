@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Response } from "../interfaces/order.interface";
 import { Product } from "../interfaces/product.interface";
+import { server } from "../store";
 
 export const orderApi = createApi({
   reducerPath: "orderApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000/api/v1" }),
+  baseQuery: fetchBaseQuery({ baseUrl: server }),
   endpoints: (builder) => ({
     newOrder: builder.mutation<
       Response,

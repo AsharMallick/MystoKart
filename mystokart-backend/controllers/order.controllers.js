@@ -95,8 +95,8 @@ exports.createPayment = catchAsyncError(async (req, res) => {
     }),
     customer: customer.id,
     mode: "payment",
-    success_url: `http://localhost:3000/order/${order._id}`,
-    cancel_url: `http://localhost:3000/checkout?success=false`,
+    success_url: `${process.env.FRONTEND_URL}/order/${order._id}`,
+    cancel_url: `${process.env.FRONTEND_URL}/checkout?success=false`,
   });
   order.paymentInfo.status = session.payment_status;
   order.paymentInfo.payment_id = session.id;

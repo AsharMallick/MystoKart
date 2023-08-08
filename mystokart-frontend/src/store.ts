@@ -7,7 +7,7 @@ import { productsApi } from "./services/product";
 import { orderApi } from "./services/order";
 import { cartReducer } from "./reducers/cart";
 import orderReducer from "./reducers/order";
-export const server = `http://localhost:4000/api/v1`;
+export const server = `${process.env.REACT_APP_SERVER_URL}/api/v1`;
 
 export const store = configureStore({
   reducer: {
