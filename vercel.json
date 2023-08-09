@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "name": "native-server",
+  "builds": [{ "src": "mystokart-backend/server.js", "use": "@vercel/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "/mystokart-backend/server.js" }]
+}

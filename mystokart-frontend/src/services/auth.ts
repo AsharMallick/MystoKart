@@ -4,7 +4,7 @@ import { Response } from "../interfaces/user.interface";
 
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({ baseUrl: server }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_SERVER_URL }),
   endpoints: (builder) => ({
     login: builder.mutation<Response, { email: string; password: string }>({
       query: ({ email, password }) => ({

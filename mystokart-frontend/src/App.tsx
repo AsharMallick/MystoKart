@@ -81,7 +81,7 @@ export const App = () => {
   useEffect(() => {
     products?.forEach(async (item) => {
       const { data } = await axios.post(
-        server + "/checkcart",
+        process.env.REACT_APP_SERVER_URL + "/checkcart",
         { price: item.price },
         {
           headers: { "Content-Type": "application/json" },

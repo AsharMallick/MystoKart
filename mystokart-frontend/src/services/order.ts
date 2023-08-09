@@ -5,7 +5,7 @@ import { server } from "../store";
 
 export const orderApi = createApi({
   reducerPath: "orderApi",
-  baseQuery: fetchBaseQuery({ baseUrl: server }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_SERVER_URL }),
   endpoints: (builder) => ({
     newOrder: builder.mutation<
       Response,

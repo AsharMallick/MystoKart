@@ -4,7 +4,7 @@ import { Response } from "../interfaces/product.interface";
 
 export const productsApi = createApi({
   reducerPath: "productsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: server }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_SERVER_URL }),
   endpoints: (builder) => ({
     getProducts: builder.query<
       Response,
