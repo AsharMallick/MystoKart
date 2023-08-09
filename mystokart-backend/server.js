@@ -36,12 +36,12 @@ app.use("/api/v1", user);
 app.use("/api/v1", product);
 app.use("/api/v1", order);
 
-// app.use(express.static(path.join(__dirname, "../mystokart-frontend/build")));
-// app.get("*", (_, res) => {
-//   res.sendFile(
-//     path.resolve(__dirname, "../mystokart-frontend/build/index.html")
-//   );
-// });
+app.use(express.static(path.join(__dirname, "../mystokart-frontend/build")));
+app.get("*", (_, res) => {
+  res.sendFile(
+    path.resolve(__dirname, "../mystokart-frontend/build/index.html")
+  );
+});
 app.listen(PORT, () => {
   console.log(`App is listening on http://localhost:${PORT}`);
 });
