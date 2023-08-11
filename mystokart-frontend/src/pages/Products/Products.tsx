@@ -218,7 +218,7 @@ const Products = () => {
         {result.data?.totalPages > 1 && (
           <Pagination
             activePage={currentPage}
-            itemsCountPerPage={9}
+            itemsCountPerPage={6}
             totalItemsCount={result?.data?.totalProducts}
             onChange={setCurrentPageNo}
             nextPageText="Next"

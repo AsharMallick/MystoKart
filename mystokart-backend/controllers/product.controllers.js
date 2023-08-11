@@ -24,7 +24,7 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
 
 exports.getProducts = catchAsyncError(async (req, res, next) => {
   const { category, search, gt, lt } = req.query;
-  const prodPerPage = 9;
+  const prodPerPage = 6;
   const page = req.query.page || 1;
   const skip = prodPerPage * (page - 1);
   const greaterThan = parseInt(gt) || 0;
