@@ -124,7 +124,10 @@ exports.checkCart = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getFeaturedProducts = catchAsyncError(async (req, res, next) => {
-  const products = await Product.aggregate([{ $sample: { size: 7 } }]);
+  const products = await getOrCacheData("featuredProducts", async () => {
+    const products = await Product.aggregate([{ $sample: { size: 7 } }]);
+    return products;
+  });
   return res.status(200).json({
     success: true,
     products,
