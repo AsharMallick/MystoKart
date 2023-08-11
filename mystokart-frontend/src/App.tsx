@@ -36,7 +36,6 @@ export const App = () => {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
   const result = useLoadUserQuery();
-  console.log({ env: process.env });
   useEffect(() => {
     document.title =
       location.split("/")[1] != "product"
