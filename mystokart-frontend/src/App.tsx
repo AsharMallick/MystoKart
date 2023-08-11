@@ -80,17 +80,21 @@ export const App = () => {
 
   useEffect(() => {
     products?.forEach(async (item) => {
-      const { data } = await axios.post(
-        process.env.REACT_APP_SERVER_URL + "/checkcart",
-        { price: item.price },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
+      try {
+        const { data } = await axios.post(
+          process.env.REACT_APP_SERVER_URL + "/checkcart",
+          { price: item.price },
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
+        );
+        if (!data.success) {
+          toast.error("Some error occured with the cart");
+          dispatch({ type: "CLEAR_CART" });
         }
-      );
-      if (!data.success) {
-        toast.error("Some error occured with the cart");
-        dispatch({ type: "CLEAR_CART" });
+      } catch (error) {
+        console.log({ error });
       }
     });
   }, [products]);

@@ -64,9 +64,12 @@ export default function SocialProfileSimple() {
           </Heading>
           <UnorderedList>
             {result.data?.order?.orderItems.map((item) => (
-              <ListItem key={item._id}>
-                {item.title} | ₹{item.price} * {item.qty}
-              </ListItem>
+              <>
+                <hr />
+                <ListItem my={"2"} key={item._id}>
+                  {item.title} | ₹{item.price} * {item.qty}
+                </ListItem>
+              </>
             ))}
           </UnorderedList>
         </VStack>

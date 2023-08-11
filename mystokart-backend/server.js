@@ -23,6 +23,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
+    // origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -42,7 +43,6 @@ app.get("*", (_, res) => {
     path.resolve(__dirname, "../mystokart-frontend/build/index.html")
   );
 });
-console.log(process.env);
 app.listen(PORT, () => {
   console.log(`App is listening on http://localhost:${PORT}`);
 });

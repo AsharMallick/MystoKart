@@ -35,7 +35,7 @@ exports.createPayment = catchAsyncError(async (req, res) => {
     email: req.user.email,
     name: req.user.name,
     metadata: {
-      cart: JSON.stringify(orderData),
+      cart: orderData.toString(),
       id: req.user._id,
     },
   });
