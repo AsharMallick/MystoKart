@@ -13,6 +13,11 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Avatar,
 } from "@chakra-ui/react";
 import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
@@ -173,13 +178,19 @@ const Navbar = ({}) => {
           </HStack>
           <Box display={"flex"} gap={"2"} mx={"2"}>
             {isAuthenticated ? (
-              <Button
-                onClick={handleLogout}
-                variant={"outline"}
-                colorScheme="white"
-              >
-                Logout
-              </Button>
+              <Menu>
+                <MenuButton>
+                  <Avatar src={user?.avatar.url} />
+                </MenuButton>
+                <MenuList color={"black"}>
+                  <Link to={"/orders"}>
+                    <MenuItem>My Orders</MenuItem>
+                  </Link>
+                  <MenuItem as={"button"} onClick={handleLogout}>
+                    Logout
+                  </MenuItem>
+                </MenuList>
+              </Menu>
             ) : (
               <>
                 <Link to={"/login"}>

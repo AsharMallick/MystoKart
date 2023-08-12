@@ -1,6 +1,7 @@
 const User = require("../models/User.model");
 const { catchAsyncError } = require("../middlewares/catchAsyncError");
 const ErrorHandler = require("../utils/errorHandler.js");
+const cloudinary = require("cloudinary");
 
 exports.login = catchAsyncError(async (req, res, next) => {
   const { email, password } = req.body;
@@ -12,6 +13,7 @@ exports.login = catchAsyncError(async (req, res, next) => {
   if (!isMatch) {
     return next(new ErrorHandler("Invalid Credentials", 401));
   }
+
   const token = await user.generateToken();
 
   res
@@ -34,10 +36,20 @@ exports.register = catchAsyncError(async (req, res, next) => {
   if (user) {
     return next(new ErrorHandler("User already exists", 401));
   }
+  const myCloud = await cloudinary.v2.uploader.upload(
+    req.body.avatar.toString(),
+    {
+      folder: "avatars",
+    }
+  );
   user = await User.create({
     name,
     email,
     password,
+    avatar: {
+      public_id: myCloud.public_id,
+      url: myCloud.url,
+    },
   });
   const token = await user.generateToken();
   res

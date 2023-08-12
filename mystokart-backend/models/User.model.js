@@ -16,6 +16,10 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  avatar: {
+    public_id: String,
+    url: String,
+  },
   role: {
     type: String,
     default: "user",

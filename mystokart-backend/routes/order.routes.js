@@ -4,6 +4,7 @@ const {
   createPayment,
   processOrder,
   getOrder,
+  getMyOrders,
 } = require("../controllers/order.controllers");
 const router = express.Router();
 const { isAuthenticated, authorizeAdmin } = require("../middlewares/auth");
@@ -14,4 +15,5 @@ router
   .route("/process/order/:id")
   .put(isAuthenticated, authorizeAdmin, processOrder);
 router.route("/order/:id").get(isAuthenticated, getOrder);
+router.route("/myorders").get(isAuthenticated, getMyOrders);
 module.exports = router;

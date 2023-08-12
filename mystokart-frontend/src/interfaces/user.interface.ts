@@ -4,6 +4,10 @@ export interface User {
   email: string;
   password: string;
   role: string;
+  avatar: {
+    public_id: string;
+    url: string;
+  };
 }
 
 export interface Response {

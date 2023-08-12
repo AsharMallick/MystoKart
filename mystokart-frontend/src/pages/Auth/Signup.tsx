@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect } from "react";
+import React, { ChangeEvent, FormEvent, useEffect } from "react";
 import {
   FormControl,
   FormLabel,
@@ -7,6 +7,7 @@ import {
   Box,
   Flex,
   Heading,
+  Avatar,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -21,13 +22,14 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [file, setFile] = useState<string>("");
   const navigate = useNavigate();
   const { user } = useSelector((state: State) => state.auth);
   const [register, result] = useRegisterMutation();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    register({ username, email, password });
+    register({ username, email, password, avatar: file });
   };
   useEffect(() => {
     if (result.isSuccess) {
@@ -39,6 +41,16 @@ const Signup = () => {
       navigate("/");
     }
   }, [navigate, user]);
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (reader.readyState === 2) {
+        setFile(String(reader.result));
+      }
+    };
+    reader.readAsDataURL(file);
+  };
   return (
     <MotionFlex
       height="100vh"
@@ -57,6 +69,9 @@ const Signup = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
+        <Flex justifyContent={"center"} alignItems={"center"}>
+          {file && <Avatar src={file!} />}
+        </Flex>
         <form onSubmit={handleSubmit}>
           <FormControl id="username" isRequired>
             <FormLabel>Username</FormLabel>
@@ -85,7 +100,43 @@ const Signup = () => {
               width="100%"
             />
           </FormControl>
-          <Button colorScheme="purple" mt={4} w="100%" type="submit">
+          <input
+            type="file"
+            accept="image/*,video/*"
+            style={{ display: "none" }}
+            id="file"
+            onChange={handleFileChange}
+          />
+          <label
+            htmlFor="file"
+            style={{
+              cursor: "pointer",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "12px 0px",
+            }}
+          >
+            <p
+              style={{
+                borderRadius: "12px",
+                color: "#805AD5",
+                padding: "6px",
+                borderColor: "#805AD5",
+                borderWidth: "2px",
+              }}
+            >
+              Profile photo
+            </p>
+          </label>
+          <Button
+            colorScheme="purple"
+            mt={4}
+            w="100%"
+            type="submit"
+            isLoading={result.isLoading}
+            isDisabled={!username || !email || !password || !file}
+          >
             Signup
           </Button>
         </form>

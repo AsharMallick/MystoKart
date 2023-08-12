@@ -135,3 +135,11 @@ exports.getOrder = catchAsyncError(async (req, res, next) => {
     order,
   });
 });
+
+exports.getMyOrders = catchAsyncError(async (req, res) => {
+  const orders = await Order.find({ user: req.user._id });
+  return res.status(200).json({
+    orders,
+    success: true,
+  });
+});
