@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import bgImg from "../../assets/bg.png";
 import ProductCard from "../../components/ProductCard";
 import { useGetFeaturedProductsQuery } from "../../services/product";
+import Loader from "../../components/Loader";
 
 const Home = () => {
   const result = useGetFeaturedProductsQuery();
@@ -64,33 +65,37 @@ const Home = () => {
       </Flex>
 
       {/* Featured Products Carousel */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
-        id={"featuredProducts"}
-      >
-        <Heading as="h2" size="lg" my={8}>
-          Featured Products
-        </Heading>
-        <Container maxW={"container.lg"}>
-          <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={4}>
-            {/* Placeholder images for featured products */}
-            {result?.data?.products?.map((product) => {
-              return (
-                <ProductCard
-                  imageSrc={product.image.url}
-                  category={product.category}
-                  id={product._id}
-                  key={product._id}
-                  title={product.title}
-                  price={product.price}
-                />
-              );
-            })}
-          </SimpleGrid>
-        </Container>
-      </motion.div>
+      {result?.isLoading ? (
+        <Loader />
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          id={"featuredProducts"}
+        >
+          <Heading as="h2" size="lg" my={8}>
+            Featured Products
+          </Heading>
+          <Container maxW={"container.lg"}>
+            <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={4}>
+              {/* Placeholder images for featured products */}
+              {result?.data?.products?.map((product) => {
+                return (
+                  <ProductCard
+                    imageSrc={product.image.url}
+                    category={product.category}
+                    id={product._id}
+                    key={product._id}
+                    title={product.title}
+                    price={product.price}
+                  />
+                );
+              })}
+            </SimpleGrid>
+          </Container>
+        </motion.div>
+      )}
     </Flex>
   );
 };

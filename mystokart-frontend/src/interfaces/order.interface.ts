@@ -22,4 +22,5 @@ export interface Order {
     phone: string;
   };
   totalPrice: number;
+  orderType: string;
 }

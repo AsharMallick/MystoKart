@@ -21,6 +21,7 @@ import Loader from "./components/Loader";
 import Order from "./pages/Order/Order";
 import axios from "axios";
 import { server } from "./store";
+import MyOrders from "./pages/Order/MyOrders";
 
 export const App = () => {
   const { user, error, message } = useSelector((state: State) => state.auth);
@@ -123,6 +124,7 @@ export const App = () => {
         <Route path="/terms" element={<Terms />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order/:id" element={<Order />} />
+        <Route path="/orders" element={<MyOrders />} />
       </Routes>
       <Footer />
     </ChakraProvider>

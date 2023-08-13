@@ -39,7 +39,15 @@ export const orderApi = createApi({
         credentials: "include",
       }),
     }),
+    getMyOrders: builder.query<Response, void>({
+      query: () => ({
+        url: "myorders",
+        method: "GET",
+        credentials: "include",
+      }),
+    }),
   }),
 });
 
-export const { useNewOrderMutation, useGetOrderQuery } = orderApi;
+export const { useNewOrderMutation, useGetOrderQuery, useGetMyOrdersQuery } =
+  orderApi;

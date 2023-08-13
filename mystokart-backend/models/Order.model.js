@@ -73,7 +73,11 @@ const schema = new mongoose.Schema(
       default: {},
     },
     totalPrice: Number,
-    orderType: String,
+    orderType: {
+      type: String,
+      enum: ["COD", "Online"],
+      required: true,
+    },
     user: {
       type: mongoose.Types.ObjectId,
       ref: "User",
